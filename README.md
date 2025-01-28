@@ -11,3 +11,4 @@ Progress:
 Resources:
 - Programming Massively Parallel Processors
 - [CUDA 120 Days Challenge](https://github.com/AdepojuJeremy/Cuda-120-Days-Challenge)
+- [ECE 408](https://www.youtube.com/playlist?list=PL6RdenZrxrw-UKfRL5smPfFFpeqwN3Dsz)
