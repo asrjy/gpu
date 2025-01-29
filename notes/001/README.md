@@ -1,0 +1,43 @@
+- data parallelism: computation to be performed on different parts of the dataset can be done independently of each other. 
+- biggest problem in modern appns is too much data to process. 
+- data manipulation tasks can be broken down like image blurring just needs a neighbourhood of pixels, greyscaling requires independent etc.,
+- images can be converted to greyscale by calculating luminance as r*.21 + g*.72 + b*.07.
+weighted average since we are more sensitive to green than others. 
+- task parallelism: breaking down task into multiple tasks executed parallelly. it only exists if two processes can be done independently. some common examples are I/O and data transfers. 
+- in general data parallelism is where most optimization is done. streams are used to perform task parallelism. 
+- CUDA C extends ANSI C (standardized C)
+- the cpu is called the host and the gpus are called devices. 
+- the source file (the cuda program) is a mixture of host and device code, each having their own markings. 
+- the host code includes functions and kernels that are executed parallelly. 
+- a grid is a collection of threads that are launched on the device when the host calls a kernel function. 
+- the computation happens in these grids and they are terminated upon their execution and computation goes back to the host until another grid is launched. 
+- but most of the time, host and device computation happens simulataneously, not serially. 
+- a thread will contain the code, point that's being executed, values of variables and data structures. 
+- execution of a thread will happen sequentially
+- `_h` is used to denote variables used by the hols and `_d` for variables used by the device. 
+- usually we don't do a lot of copying from host to device. data is kept on device and we invoke functions on them from the host code. 
+- the dram in gpus are called device global memory. 
+- cuda runtime system provides apis to free/create memory. 
+- `cudaMalloc(address of pointer, size of allocated object)` and `cudaFree(pointer to object to be freed)` are couple of api functions for memory management on device global memory. 
+- object allocated by `cudaMalloc` is not restricted to any specific type and the address of pointer variable should be cast to `void **` so the original value can be changed. this pointer value is used in host code when calling `cudaMalloc`
+- `cudaMalloc` returns a pointer to the varible in device global memory. `cudaFree` only needs the value of object to be freed, since the value itself is a pointer. 
+- `cudaMemcpy(pointer to dest, pointer to source, number of bytes, direction of transfer)` copies data from host to device, once memory has been allocated on device. 
+- `cudaMemcpyHostToDevice` and `cudaMemcpyDeviceToHost` are two predefined symbolic constants for the fourth parameter of `cudaMemCpy`. 
+- a stub is the host code where space allocation, memory transfer, kernel calls are done. 
+- spmd (single program multiple data) style is where same code is executed by multiple threads parallelly. 
+- host -> kernel -> grid of threads launched -> grid = array of thread blocks aka blocks
+- all blocks of grid are of the same size and can contain upto 1024 threads (used to be 512 only before). 
+- the total number of threads in each block is specified in the kernel call and it could vary between multiple calls of the same kernel. 
+- number of threads in a block is stored in `blockDim`, a struct with three unsigned integer fields (x, y, z), allowing us to store grids upto 3 dimensional array. 
+- generally recommended to have threads in each dimension to be a multiple of 32 for hw efficiency. 
+- `threadIdx` gives each thread a unique coordinate within a block and all threads in a block will have the same `blockIdx`. 
+- no need to use `_d` or `_h` in kernels, because no point. 
+- `__global__` infront of function indicates that it is a kernel and can be used to generate blocks ond device. 
+- `__host__` indicates it is a host function. `__device__` also indicates it is a cuda function, but it can only be called from the device, not the host, unlike `__global__`.
+- we can use both `__device__` and `__host__` for the same function which means two versions of object code for the same function will be generated. 
+- a thread can be uniquely represented by `thread(blockIdx.x, threadIdx.x)` (which block and which thread does it belong to?)
+- an automatic variable if present in a kernel, will be generated for ech thread and will have diff value in each. 
+- loop parallalelism is where a loop is replaced by threads executed in parallel.
+- same cuda code can be run on different gpus of different sizes.
+- when kernel is called, grid and thread block dimensions are set between `<<<` and `>>>` which are called configuration parameters. 
+- cuda code is compiled using NVCC compiler, where the host code is compiled using generic GCC compiler and the device code is compiled by NVCC into binary files called PTX files. these PTX files are further compiled by NVCC into real object files that are executed on a gpu. 
