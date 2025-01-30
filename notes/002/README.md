@@ -1,0 +1,20 @@
+- in a grid, cuda follows SIMD structure ie., single instruction multiple threads. the indices of threads define which portion of the data they work on. 
+- the parameters `<<<blocksPerGrid, dimensionsOfBlock>>>` are of the type `dim3`, a vector that can take 3 integer values. we can use fewer than 3 dimensions by setting unused dimension values to 1. example: `dim3 dimGrid(32, 1, 1)`. 
+- these can have any name as long as type is dim3. 
+- if it's just one dimension, you can just use the value. no need for dim3. the remaining two dimensions automatically take the value of 1.
+- `gridDim.x` can take values bw 1 to 2^31 - 1, `gridDim.y` and `gridDim.z` can range from 1 to 2^16 - 1 (65535).         
+- `blockDim.x` can range from 0 to `gridDim.x - 1` and so one. 
+- max possible total size of block is 1024 threads. they can be distributed in any way within the block (256, 2, 2), (2, 2, 256) etc.,
+- a grid dimension can be smaller than a block dimension and vice versa. 
+- each `threadIdx` also has three coordinates. 
+- the labels of blocks are reversed in dimension as in block(1, 0) means block that has `blockIdx.y = 1` and `blockIdx.x = 0`. 
+thread(1, 0, 2) has `threadIdx.z = 1`, `threadIdx.y = 0` and `threadIdx.x = 2`. this is done to help us with mapping thread coordinates for multidimensional data. 
+- this reversing of dimensions is because, cuda follows row major layout. so since columns are the fastest varying dimension, threadIdx.x will access these values faster if they are in consecutive memory locations. 
+- c requires the number of columns to be known during compile time, but the whole point of using dynamically allocated arrays is that we can use varying size data. hence we usually flatten a dynamically allocated 2d array into an equivalent 1d array. 
+- because memory is "flat" in modern computers, all multi dimensional data is flattened. 
+- if the data dimension is static, cuda allows us to use higher dimensional indexing. but under the hood, it is still linearized. 
+- memory space in a computer is the program's private workspace in computer's memory. its where data and instructions are kept. so when a program needs some data, it takes the starting address and how many bytes are needed to access this data. 
+- floats need 4 bytes and doubles need 8 bytes, these multibyte requiring varibles are stored consecutively in memory. 
+- row major layout is where all elements of row are consecutively stored in memory. 
+- accessing value at jth row and ith column of M, ie., M[j][i], assming there are 4 values in each row is done by j * 4 + i
+- column major layour is the transposed form of row major layout.
