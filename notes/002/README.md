@@ -17,4 +17,7 @@ thread(1, 0, 2) has `threadIdx.z = 1`, `threadIdx.y = 0` and `threadIdx.x = 2`. 
 - floats need 4 bytes and doubles need 8 bytes, these multibyte requiring varibles are stored consecutively in memory. 
 - row major layout is where all elements of row are consecutively stored in memory. 
 - accessing value at jth row and ith column of M, ie., M[j][i], assming there are 4 values in each row is done by j * 4 + i
-- column major layour is the transposed form of row major layout.
+- column major layour is the transposed form of row major layout. 
+- blurring is usually done as a weighted sum of a neighbourhood of the image. it belongs to the convolution pattern. 
+- usually weights are given to how far away a pixel is from the current position, this is called gaussian blur. 
+- cuda kernel launches are asynchronous. `cudaDeviceSynchrnonize()`  forces the host to wait till gpu is finished executing all preceding cuda calls. this will ensure kernel is completed before any copying is done and catch any errors that might occur during kernel execution. 
