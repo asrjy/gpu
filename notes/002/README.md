@@ -21,3 +21,54 @@ thread(1, 0, 2) has `threadIdx.z = 1`, `threadIdx.y = 0` and `threadIdx.x = 2`. 
 - blurring is usually done as a weighted sum of a neighbourhood of the image. it belongs to the convolution pattern. 
 - usually weights are given to how far away a pixel is from the current position, this is called gaussian blur. 
 - cuda kernel launches are asynchronous. `cudaDeviceSynchrnonize()`  forces the host to wait till gpu is finished executing all preceding cuda calls. this will ensure kernel is completed before any copying is done and catch any errors that might occur during kernel execution. 
+
+
+
+multidimensional data
+images matrices etc.,
+
+how to orgaize threads efficiently
+
+image processing and comp vision
+
+grids, blocks and threads all can be 3 dimensional 
+
+if 2d image, use 2d threads
+
+grid dim and block dim help us define how big blocks are
+there are limits
+
+breakdown datasets to fit into limitations 
+
+using thread id, it can determine what data it works on
+ex: find pixel in greyscale
+
+c is designed for flat matrix space 
+we have to flatten/linearize them 
+cuda c uses row major layout: elements in same row are nex to each other in memory
+column major layout: fortran uses it. 
+
+we might have to transpose matrices sometimes 
+
+handling boundary conditions is crucial and dont access non existent data. specific code for this. 
+
+image blurring:
+
+each pixel is output is average of surrounding pixels 
+each thread will calculate 1 pixel in blurred output. takes neighbouring of that image and averages it and stores in it. 
+each thread has unique id based on position that is used to calcualte where to look for. 
+have to include boundary conditions for edges. 
+
+matrix multiplication 
+each element will calculate single element of output matrix
+thread ids are used for row and column in grid for corresponding input
+matrices are stored as 1d array in memory
+
+what if matrix is huge? break down matrix into sub matrices 
+where the host code comes in. seperate grids for each sub matrix
+
+have multiple grids working at each time 
+
+another approach is instead of each thread calculating single ouput, calucte multiple 
+
+we can also do dynamic mapping in threads for the data it works on. 

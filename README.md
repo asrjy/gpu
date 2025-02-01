@@ -12,6 +12,7 @@
 |001|[vecAbsDiff](https://github.com/asrjy/gpu/blob/main/kernels/vecAbsDiff.cu)|[PMPP Chapter 2](https://github.com/asrjy/gpu/blob/main/notes/001/)|read chapter 2 of pmpp, implemented vector absolute difference kernel|
 |002|[colorToGrayScaleConversion](https://github.com/asrjy/gpu/blob/main/kernels/colorToGrayscaleConversion.cu)|[PMPP Chapter 3](https://github.com/asrjy/gpu/blob/main/notes/002/)|read half of chapter 2 of pmpp, implemented color to grayscale conversion|
 |003|[imageBlur](https://github.com/asrjy/gpu/blob/main/kernels/imageBlur.cu)|[PMPP Chapter 3](https://github.com/asrjy/gpu/blob/main/notes/002/)|read parts of image blur and about better ways to handle errors, image blurring logic|
+|004|[gaussianBlur](https://github.com/asrjy/gpu/blob/main/kernels/gaussianBlur.cu)|-|built on top of image blur; struggling to understand multidimensionality;|
 
 
 

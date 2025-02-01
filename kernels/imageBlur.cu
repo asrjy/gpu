@@ -39,8 +39,6 @@ void imageBlurKernel(unsigned char* inputImage, unsigned char* outputImage, int 
                 blurredPixelValue += inputImage[clampedRow * width + clampedCol] * kernelWeight;
             }
         }
-
-
         outputImage[row * width + col] = (unsigned char)blurredPixelValue;
     }
 }
