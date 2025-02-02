@@ -21,8 +21,13 @@ thread(1, 0, 2) has `threadIdx.z = 1`, `threadIdx.y = 0` and `threadIdx.x = 2`. 
 - blurring is usually done as a weighted sum of a neighbourhood of the image. it belongs to the convolution pattern. 
 - usually weights are given to how far away a pixel is from the current position, this is called gaussian blur. 
 - cuda kernel launches are asynchronous. `cudaDeviceSynchrnonize()`  forces the host to wait till gpu is finished executing all preceding cuda calls. this will ensure kernel is completed before any copying is done and catch any errors that might occur during kernel execution. 
-
-
+- gpu's dram is relatively slower compard to the cuda cores. so everytime a thread needs to fetch memory from there, latency is introduced. 
+- shared memory is fast on-chip cache that is shared by all threads within a single block. it's closer to the cuda cores and has significantly low latency and higher bandwidth than global memory. 
+- once data has been loaded into the shared memory by a block, all threads in that block will have access to it. 
+- gpu memory hierarchy in terms of distance and speed: registers (fastest memory on the gpu; frequently used variables are stored here; practically instantaneous) -> L1 cache (shared by small group of threads or a small group of warps in a streaming multiprocessor) -> shared memory (resides within the shared multiprocessor, the heart and core processing unit of the gpu; lower latency and higher bandwidth than global memory) -> L2 cache (on chip but slower than l1 cache and shared memory; but faster than global memory) -> device memory /dram (largest memory space but located off the chip and connected via a memory bus)
+- on chip means things that reside on the same silicon die as the processor's core logic. off chip means things that are not located on the same die, but connected via memory bus or external interfaces. 
+- cooperative loading is done when threads load data into the shared memory ie., each thread within block is responsible for loading some data into the shared memory. 
+- synchronization: all threads in the block must finish loading data before any thread starts reading from there. `__syncthreads()` will make sure all threads in the block will wait till all threads reach this call. 
 
 multidimensional data
 images matrices etc.,
