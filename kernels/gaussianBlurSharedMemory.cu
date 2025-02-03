@@ -177,9 +177,22 @@ int main() {
     dim3 blockDim(BLOCK_SIZE, BLOCK_SIZE); 
     dim3 gridDim((width + blockDim.x - 1) / blockDim.x, (height + blockDim.y - 1) / blockDim.y);
 
+    // creating cuda events for timing
+    cudaEvent_t start, stop;
+    cudaEventCreate(&start);
+    cudaEventCreate(&stop);
+
+    // recording 'start' event at 0
+    cudaEventRecord(stop, 0);
+
     gaussianBlurHorizontalKernel_SharedMem<<<gridDim, blockDim>>>(d_inputImage, d_intermediateImage, width, height, d_kernel1D, kernelSize);
     checkCudaErrors(cudaGetLastError());
     checkCudaErrors(cudaDeviceSynchronize());
+
+    // recording 'stop' event
+    cudaEventRecord(stop, 0);
+    // wait for stop event to finish to be recorded and gpu to finish
+    cudaEventSynchronize(stop);
 
     gaussianBlurVerticalKernel_SharedMem<<<gridDim, blockDim>>>(d_intermediateImage, d_outputImage, width, height, d_kernel1D, kernelSize);
     checkCudaErrors(cudaGetLastError());
@@ -192,6 +205,13 @@ int main() {
         printf("%d ", h_outputImage[i]);
     }
     printf("\n");
+
+    // calculating execution time in milliseconds
+    float milliseconds;
+    cudaEventElapsedTime(&milliseconds, start, stop);
+    // milliseconds = milliseconds/100;
+
+    printf("\n Kernel Execution Time: %.3f milliseconds\n", milliseconds);
 
     checkCudaErrors(cudaFree(d_inputImage));
     checkCudaErrors(cudaFree(d_outputImage));
