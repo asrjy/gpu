@@ -32,3 +32,10 @@ thread(1, 0, 2) has `threadIdx.z = 1`, `threadIdx.y = 0` and `threadIdx.x = 2`. 
 - since `d_xx` has a type of float/int, it is type casted to `void**`, hence the syntax `(void**)&d_xxx`. 
 - cuda provides events that allow us to precisely measure time on the gpu. create cuda event -> record the start and end of the events -> synchronize and make sure the gpu actually reached the end events -> calculate difference between end and start times.
 - `cudaDeviceSynchronize(stop)` makes sure all threads have reached there and after this difference is to be calculated. 
+- sometimes, for small programs, cpu and gpu might consume the same time. this could be because of gpu kernel launch overhead, cpu cache effects working in favor of cpu method and the noise in micro benchmarking in gneral. 
+- time in gpu can be measured creating start and stop `cudaEvent_t`. use `cudaEventCreate(&start) and (&stop)` to initialize them, then use `cudaRecordEvent(start, 0)` to start counting. after kernel launch is done `cudaRecordEvent(stop, 0)` to record a stop event and `cudaEventSynchronize(stop)` to ensure all threads have reached that point. then `cudaElapsedTime(&time_gpu, start, stop)` to store the time in `time_gpu` variable. 
+- time in cpu can be measured using `clock()` from `time.h`. create start and stop variables, call `clock()` and store result in these two variables. calculate time using `(stop - start)/CLOCKS_PER_SEC * 1000` to get time in milliseconds. 
+- the area where processing happens in a gpu is called streaming multiprocessors. threads within an SM are grouped again into warps (typically 32 threads in nvidia GPUs). hence it is recommended to keep threadsperblock a multiple of 32. 
+- inside a warp, the threads follow single instruction multiple data instruction type. 
+- occupancy is a measure of how occupied each SM is with it's threads. too few threads: might not fully utilize the parallel processing power of gpu. too many threads: can reduce the number of blocks that can reside inside an sm, potentially limiting parallelism. 
+- 
