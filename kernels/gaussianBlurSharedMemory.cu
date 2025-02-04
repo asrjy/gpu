@@ -88,7 +88,10 @@ __global__ void gaussianBlurHorizontalKernel_SharedMem(const unsigned char* inpu
 
         for (int kernelColOffset = -kernelRadius; kernelColOffset <= kernelRadius; ++kernelColOffset) {
             int sharedMemoryCol = sharedCol + kernelColOffset; // Access within sharedTile bounds
-            blurredPixelValue += sharedTile[sharedRow][sharedMemoryCol] * kernel1D[kernelColOffset + kernelRadius];
+            if (sharedMemoryCol >= 0 && sharedMemoryCol < (BLOCK_SIZE + 2 * KERNEL_RADIUS)) {
+                blurredPixelValue += sharedTile[sharedRow][sharedMemoryCol] * kernel1D[kernelColOffset + kernelRadius];
+            }
+            // blurredPixelValue += sharedTile[sharedRow][sharedMemoryCol] * kernel1D[kernelColOffset + kernelRadius];
         }
         intermediateImage[row * width + col] = (unsigned char)blurredPixelValue;
     }
@@ -134,7 +137,10 @@ __global__ void gaussianBlurVerticalKernel_SharedMem(const unsigned char* interm
 
         for (int kernelRowOffset = -kernelRadius; kernelRowOffset <= kernelRadius; ++kernelRowOffset) {
             int sharedMemoryRow = sharedRow + kernelRowOffset; // Access within sharedTile bounds
-            blurredPixelValue += sharedTile[sharedMemoryRow][sharedCol] * kernel1D[kernelRowOffset + kernelRadius];
+            // blurredPixelValue += sharedTile[sharedMemoryRow][sharedCol] * kernel1D[kernelRowOffset + kernelRadius];
+            if (sharedMemoryRow >= 0 && sharedMemoryRow < (BLOCK_SIZE + 2 * KERNEL_RADIUS)) {
+                blurredPixelValue += sharedTile[sharedMemoryRow][sharedCol] * kernel1D[kernelRowOffset + kernelRadius];
+            }
         }
         outputImage[row * width + col] = (unsigned char)blurredPixelValue;
     }
@@ -183,9 +189,14 @@ int main() {
     cudaEventCreate(&stop);
 
     // recording 'start' event at 0
-    cudaEventRecord(stop, 0);
+    cudaEventRecord(start, 0);
 
     gaussianBlurHorizontalKernel_SharedMem<<<gridDim, blockDim>>>(d_inputImage, d_intermediateImage, width, height, d_kernel1D, kernelSize);
+    checkCudaErrors(cudaGetLastError());
+    checkCudaErrors(cudaDeviceSynchronize());
+
+
+    gaussianBlurVerticalKernel_SharedMem<<<gridDim, blockDim>>>(d_intermediateImage, d_outputImage, width, height, d_kernel1D, kernelSize);
     checkCudaErrors(cudaGetLastError());
     checkCudaErrors(cudaDeviceSynchronize());
 
@@ -193,11 +204,7 @@ int main() {
     cudaEventRecord(stop, 0);
     // wait for stop event to finish to be recorded and gpu to finish
     cudaEventSynchronize(stop);
-
-    gaussianBlurVerticalKernel_SharedMem<<<gridDim, blockDim>>>(d_intermediateImage, d_outputImage, width, height, d_kernel1D, kernelSize);
-    checkCudaErrors(cudaGetLastError());
-    checkCudaErrors(cudaDeviceSynchronize());
-
+    
     checkCudaErrors(cudaMemcpy(h_outputImage, d_outputImage, width * height * sizeof(unsigned char), cudaMemcpyDeviceToHost));
 
     printf("First few Gaussian Blurred (Shared Mem) pixel values:\n");

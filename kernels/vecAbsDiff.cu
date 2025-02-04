@@ -89,9 +89,21 @@ int main(){
 
     int threadsPerBlock = 256;
     int blocksPerGrid = (size + threadsPerBlock - 1)/threadsPerBlock;
+    // creating cuda events for timing
+    cudaEvent_t start, stop;
+    cudaEventCreate(&start);
+    cudaEventCreate(&stop);
 
+    // recording 'start' event at 0
+    cudaEventRecord(start, 0);
     // launching the kernel
     vectorAbsDiffKernel<<<blocksPerGrid, threadsPerBlock>>>(d_Output, d_A, d_B, size);
+
+    // recording 'stop' event
+    cudaEventRecord(stop, 0);
+    // wait for stop event to finish to be recorded and gpu to finish
+    cudaEventSynchronize(stop);
+
 
     cudaStatus = cudaGetLastError();
     if (cudaStatus != cudaSuccess){
@@ -145,6 +157,13 @@ int main(){
     if (cudaStatus != cudaSuccess){
         std::cerr << "cudaFree d_Output failed! " << cudaGetErrorString(cudaStatus) << std::endl;
     }
+
+    // calculating execution time in milliseconds
+    float milliseconds;
+    cudaEventElapsedTime(&milliseconds, start, stop);
+    // milliseconds = milliseconds/100;
+
+    printf("\n Kernel Execution Time: %.3f milliseconds\n", milliseconds);
 
     return 0;
 
