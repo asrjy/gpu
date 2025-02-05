@@ -1,3 +1,4 @@
+#include "helpers.h"
 #include <iostream>
 #include <vector>
 #include <cuda_runtime.h>
@@ -98,6 +99,8 @@ int main(){
     cudaEventRecord(start, 0);
     // launching the kernel
     vectorAbsDiffKernel<<<blocksPerGrid, threadsPerBlock>>>(d_Output, d_A, d_B, size);
+
+    CHECK_KERNEL_ERROR();
 
     // recording 'stop' event
     cudaEventRecord(stop, 0);

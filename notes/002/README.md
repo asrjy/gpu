@@ -38,4 +38,5 @@ thread(1, 0, 2) has `threadIdx.z = 1`, `threadIdx.y = 0` and `threadIdx.x = 2`. 
 - the area where processing happens in a gpu is called streaming multiprocessors. threads within an SM are grouped again into warps (typically 32 threads in nvidia GPUs). hence it is recommended to keep threadsperblock a multiple of 32. 
 - inside a warp, the threads follow single instruction multiple data instruction type. 
 - occupancy is a measure of how occupied each SM is with it's threads. too few threads: might not fully utilize the parallel processing power of gpu. too many threads: can reduce the number of blocks that can reside inside an sm, potentially limiting parallelism. 
-- 
+- Basic Linear Algebra Subprograms (BLAS) is a standard for publishing libraries that perform basic linear algebra operations. there are three levels in it. first level works with vectors, second with sparse matrix operations and vectors and third level with matrix-matrix operations. 
+- BLAS functions are used as building blocks for higher level algebraic functions. 

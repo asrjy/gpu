@@ -16,6 +16,7 @@
 |005|[gaussianBlurSharedMemory](./kernels/gaussianBlurSharedMemory.cu)|[PMPP Chapter 3 & exploration](./notes/002/)|built on top of gaussian blur; learnt about shared memory and implemented it;|
 |006|[gaussianBlurSharedMemory with event times](./kernels/gaussianBlurSharedMemory.cu)|[event times and performance measurement](./notes/002/)|added perf measurement code to gaussian blur with shared memory kernel|
 |007|[vector multiply](./kernels/vecMultiply.cu) and [helpers](./kernels/helpers.h)|[internal structure of blocks](./notes/002/)|setup gpu env on new server. studied heirarchy of execution within the streaming multiprocessor. created helpers file.|
+|008|[matrix multiply](./kernels/matrixMultiplication.cu) and [helpers](./kernels/helpers.h)|[matrix multiplication, pinned memory and BLAS](./notes/002/)|read about pinned memory, pageable memory and cudaHostAlloc(). finished chapter 3 of PMPP|
 
 
 
@@ -31,12 +32,12 @@
 
 | **Day**  | **Topic**                                      | **Task/Implementation** |**Status**|
 |----------|----------------------------------------------|-------------------------|-|
-| **Phase 1: Foundations (Days 1–20)** | **Goal:** Understand CUDA fundamentals, memory hierarchy, and write basic optimized kernels. |||
+| **Phase 1: Foundations** | **Goal:** Understand CUDA fundamentals, memory hierarchy, and write basic optimized kernels. |||
 | **1**  | CUDA Setup & First Kernel  | Install CUDA, write a vector addition kernel |✅|
 | **2**  | Thread Hierarchy | Grids, blocks, threads, experimenting with configurations |✅|
 | **3**  | Memory Model Basics | Global, shared, local memory overview |✅|
 | **4**  | Memory Coalescing | Optimize vector addition using shared memory |✅|
-| **5**  | Matrix Multiplication (Naïve) | Implement basic matrix multiplication ||
+| **5**  | Matrix Multiplication (Naïve) | Implement basic matrix multiplication |✅|
 | **6**  | Matrix Multiplication (Optimized) | Use shared memory to optimize ||
 | **7**  | Profiling Basics | Use `nvprof` and `nsys` to analyze kernels ||
 | **8**  | L1/L2 Cache Effects | Study cache behavior and memory bandwidth ||
@@ -52,7 +53,7 @@
 | **18** | Parallel Sorting | Implement bitonic or bucket sort ||
 | **19** | k-Nearest Neighbors | Implement kNN search using CUDA ||
 | **20** | Code Review & Benchmarking | Optimize and compare previous implementations ||
-| **Phase 2: ML Operators (Days 21–50)** | **Goal:** Implement and optimize core ML kernels. |||
+| **Phase 2: ML Operators** | **Goal:** Implement and optimize core ML kernels. |||
 | **21** | Dense Matrix-Vector Multiplication | Implement `y = Wx + b` in CUDA ||
 | **22** | Fully Connected Layer | Implement dense forward pass ||
 | **23** | ReLU & Softmax | Implement activation functions ||
@@ -79,7 +80,7 @@
 | **44** | Optimized Attention (FlashAttention) | Implement FlashAttention concepts ||
 | **45** | Fused LayerNorm + Dropout | Optimize memory and performance ||
 | **46** | Large-Scale Training Profiling | Analyze memory bottlenecks ||
-| **Phase 3: Advanced CUDA & Large-Scale ML (Days 51–80)** | **Goal:** Optimize LLMs, multi-GPU training, and memory-efficient kernels. |||
+| **Phase 3: Advanced CUDA & Large-Scale ML** | **Goal:** Optimize LLMs, multi-GPU training, and memory-efficient kernels. |||
 | **47** | Multi-GPU Data Parallelism | Implement data parallel training ||
 | **48** | Multi-GPU Model Parallelism | Implement model parallel training ||
 | **49** | Efficient Multi-GPU Communication | Study NCCL and all-reduce ops ||
@@ -93,8 +94,6 @@
 | **57** | Architecture-Specific Optimizations | Tune for Ampere/Hopper GPUs ||
 | **58** | CUDA Graphs | Implement CUDA Graphs for execution efficiency ||
 | **59** | Memory Fragmentation Optimization | Optimize dynamic allocations ||
-| **Phase 4: Research & Final Projects (Days 81–100)** | **Goal:** Apply CUDA optimizations to real-world ML projects. |||
-| **60-70** | Optimize a Real-World Model | Pick a model (BERT/GPT) and optimize ||
-| **71-80** | Custom CUDA Model Acceleration | Implement a custom CUDA-based model optimization ||
-| **81-90** | Final Benchmarking | Compare PyTorch/TensorFlow vs. your CUDA implementations ||
-| **91-100** | Open Source Contribution | Publish your CUDA work and optimize an open-source project ||
+| **60** | Benchmarking | Compare PyTorch/TensorFlow vs. your CUDA implementations ||
+| **61** | Optimize a Real-World Model | Pick a model (BERT/GPT) and optimize ||
+| **62** | Custom CUDA Model Acceleration | Implement a custom CUDA-based model optimization ||

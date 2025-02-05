@@ -20,3 +20,19 @@
         }                                                                                   \
     } while (0)
 #endif
+
+
+inline void checkKernelError(const char* file, int line) {
+    cudaError_t err = cudaGetLastError();  // Get launch error
+    if (err != cudaSuccess) {
+        printf("Kernel launch error: %s in %s at line %d\n", cudaGetErrorString(err), file, line);
+        exit(EXIT_FAILURE);
+    }
+    err = cudaDeviceSynchronize();  // Wait and check for execution error
+    if (err != cudaSuccess) {
+        printf("Kernel execution error: %s in %s at line %d\n", cudaGetErrorString(err), file, line);
+        exit(EXIT_FAILURE);
+    }
+}
+
+#define CHECK_KERNEL_ERROR() checkKernelError(__FILE__, __LINE__)
