@@ -18,6 +18,7 @@
 |007|[vector multiply](./kernels/vecMultiply.cu) and [helpers](./kernels/helpers.h)|[internal structure of blocks](./notes/002/)|setup gpu env on new server. studied heirarchy of execution within the streaming multiprocessor. created helpers file.|
 |008|[matrix multiply](./kernels/matrixMultiplication.cu) and [helpers](./kernels/helpers.h)|[matrix multiplication, pinned memory and BLAS](./notes/002/)|read about pinned memory, pageable memory and cudaHostAlloc(). finished chapter 3 of PMPP|
 |009|[matrix transpose](./kernels/matrixTranspose.cu)|[matrix transpose and matrix multiplication blog](./notes/002/)|started reading matrix multiplication blog by siboehm, started chapter 4 of PMPP|
+|010|[face blur](./kernels/objectBlur/)|[read matrix multiplication blog](./notes/002/)|reading matrix multiplication blog by siboehm, using a compiled kernel in python|
 
 
 

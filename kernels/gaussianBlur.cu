@@ -41,8 +41,8 @@ vector<float> generateGaussianKernel1D(int kernelSize, float sigma){
 // horizontal blur 
 __global__
 void gaussianBlurHorizontalKernel(const unsigned char* inputImage, unsigned char* intermediateImage, int width, int height, const float* kernel1D, int kernelSize){
-    int row = blockIdx.y + blockDim.y + threadIdx.y;
-    int col = blockIdx.x + blockDim.x + threadIdx.x;
+    int row = blockIdx.y * blockDim.y + threadIdx.y;
+    int col = blockIdx.x * blockDim.x + threadIdx.x;
 
     if(row < height && col < width){
         float blurredPixelValue = 0.0f;
