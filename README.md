@@ -19,7 +19,7 @@
 |008|[matrix multiply](./kernels/matrixMultiplication.cu) and [helpers](./kernels/helpers.h)|[matrix multiplication, pinned memory and BLAS](./notes/002/)|read about pinned memory, pageable memory and cudaHostAlloc(). finished chapter 3 of PMPP|
 |009|[matrix transpose](./kernels/matrixTranspose.cu)|[matrix transpose and matrix multiplication blog](./notes/002/)|started reading matrix multiplication blog by siboehm, started chapter 4 of PMPP|
 |010|[face blur](./kernels/objectBlur/)|[read matrix multiplication blog](./notes/002/)|reading matrix multiplication blog by siboehm, using a compiled kernel in python|
-|010|[optimizing matrix multiplication](./kernels/matrixMultiplication.cu)|[matrix multiplication and profiling](./notes/003/)|using nsys and nvprof, reading matrix multiplication blog by siboehm|
+|011|[optimizing matrix multiplication](./kernels/matrixMultiplication.cu)|[matrix multiplication and profiling](./notes/003/)|using nsys and nvprof, reading matrix multiplication blog by siboehm|
 
 
 
