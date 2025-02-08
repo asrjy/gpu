@@ -1,0 +1,18 @@
+- profiling refers to analyzing cuda runtimes, memory access patterns, opengl calls, kernel execution times etc., 
+- nvprof (nvidia visual profiler) is a command line profiler that is now considered deprecated. 
+- nsys (nvidia nsight systems) is a system wide analysis tool and includes both cpu and gpu activity. recommended for modern cuda profiling. 
+- profiling is used to identify bottlenecks and areas for improvement. essential for performance tuning. 
+- key metrics to monitor
+    - kernel execution time: duration kernel took to execute on the gpu
+    - memory transfers bw host and device: need to minimize as much as possible
+    - occupancy of SMs: how "occupied" are the streaming multiprocessors in the gpu. sometimes higher occupany leads to better perf. 
+    - memory access patterns (coalescing): how efficiently threads in a warp are accessing the global memory. coalesced memory access are where threads access memory that are in contiguous locations. these are much faster than uncoalesced memory accesses. 
+    - instruction stats: types and number of instructions executed by the kernel. branch divergence is where threads in a warp take different execution paths. these can reduce performance. 
+- `-g` flag during compilation allows profiler to show source code line numbers in the reports, easier to pinpoint bottlenecks. 
+- `nvprof ./cuda_executable` will print summary of kernel execution times and memory transfer to console. 
+- we can save the output of the profiler to a file using `nvprof -o output.prof ./cuda_executable`
+- we can use nvidia visual profiler, `nvvp`  to view the contents of the profile file created. 
+- `nsys profile -o output ./cuda_executable` profiles code with nsys. output is stored in `output.nsys-rep` file. 
+- `-t cuda, nvtx, orst` argument specifies that cuda runtime, nvtx annotations and os runtime tracers are to be used. 
+- `-s push, trace, cuda` specifies how to format the data. 
+- `--stats=true` provides terminal output, instead of having to rely only on the gui. 

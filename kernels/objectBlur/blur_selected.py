@@ -6,18 +6,6 @@ from pycuda.compiler import SourceModule
 import time 
 import ctypes 
 
-image_path = 'image.jpg'
-blur_radius = 3
-
-cuda_lib = ctypes.CDLL("./blur_kernel.so")
-
-cuda_lib.blur_kernel.argtypes = [
-    ctypes.POINTER(ctypes.c_ubyte),     # unsigned char type input image
-    ctypes.POINTER(ctypes.c_ubyte),     # unsigned char type output image
-    ctypes.c_int,                       # int width
-    ctypes.c_int,                       # int height
-    ctypes.c_int                        # int blur_radius
-]
 
 def detect_objects(image_path):
     img = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
@@ -43,6 +31,27 @@ def select_object(objects):
         return objects[selection]
     else:
         return None
+
+def blur_with_python(image, x, y, w, h, blur_radius):
+    roi = image[y:y+h, x:x+w]
+    blurred_roi = cv2.GaussianBlur(roi, (blur_radius, blur_radius), 0)
+    image[y:y+h, x:x+w] = blurred_roi
+    return image
+
+
+
+image_path = 'image.jpg'
+blur_radius = 3
+
+cuda_lib = ctypes.CDLL("./blur_kernel.so")
+
+cuda_lib.blur_kernel.argtypes = [
+    ctypes.POINTER(ctypes.c_ubyte),     # unsigned char type input image
+    ctypes.POINTER(ctypes.c_ubyte),     # unsigned char type output image
+    ctypes.c_int,                       # int width
+    ctypes.c_int,                       # int height
+    ctypes.c_int                        # int blur_radius
+]
 
 def blur_with_cuda(image, x, y, w, h, blur_radius): 
     # extract region of interest
@@ -73,12 +82,6 @@ def blur_with_cuda(image, x, y, w, h, blur_radius):
 
     return image, cuda_time 
     
-def blur_with_python(image, x, y, w, h, blur_radius):
-    roi = image[y:y+h, x:x+w]
-    blurred_roi = cv2.GaussianBlur(roi, (blur_radius, blur_radius), 0)
-    image[y:y+h, x:x+w] = blurred_roi
-    return image
-
 
 try:
     image, objects = detect_objects(image_path)
