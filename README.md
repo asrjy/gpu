@@ -20,6 +20,7 @@
 |009|[matrix transpose](./kernels/matrixTranspose.cu)|[matrix transpose and matrix multiplication blog](./notes/002/)|started reading matrix multiplication blog by siboehm, started chapter 4 of PMPP|
 |010|[face blur](./kernels/objectBlur/)|[read matrix multiplication blog](./notes/002/)|reading matrix multiplication blog by siboehm, using a compiled kernel in python|
 |011|[optimizing matrix multiplication](./kernels/matrixMultiplication.cu)|[matrix multiplication and profiling](./notes/003/)|using nsys and nvprof, reading matrix multiplication blog by siboehm|
+|012|[shared memory](./kernels/sharedMemory.cu)|[matrix multiplication and shared memory](./notes/003/)|read about shared memory, registers and warps, bank conflicts, reading matrix multiplication blog by siboehm|
 
 
 

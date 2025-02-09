@@ -16,3 +16,10 @@
 - `-t cuda, nvtx, orst` argument specifies that cuda runtime, nvtx annotations and os runtime tracers are to be used. 
 - `-s push, trace, cuda` specifies how to format the data. 
 - `--stats=true` provides terminal output, instead of having to rely only on the gui. 
+
+- a cycle refers to the smallest unit of time in which operations can be executed ie., the fastest op can take 1 cycle. 
+- if a gpu runs at 1ghz, then 1 cycle = 1 nanosecond. if a memory access in that gpu takes 400 cycles, it means it takes 400 nano seconds. 
+- registers are the fastest (1 cycle), shared memory second fastest (1-2 cycles provided no bank conflicts), global memory (400 - 600 cycles, frequent access should be avoided)
+- a bank conflict is when multiple threads try to access the same memory bank in shared memory at the same time, causing serialization and slowing things down. 
+- typically there are 32 banks per streaming multiprocessor. 
+- 
