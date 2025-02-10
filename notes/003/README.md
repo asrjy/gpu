@@ -1,3 +1,6 @@
+- multiply + add operation is usually called fused multiply add (FMA)
+- a warp scheduler is the physical core where instructions are executed within a warp. 
+- there are four warp schedulers per multiprocessor. 
 - profiling refers to analyzing cuda runtimes, memory access patterns, opengl calls, kernel execution times etc., 
 - nvprof (nvidia visual profiler) is a command line profiler that is now considered deprecated. 
 - nsys (nvidia nsight systems) is a system wide analysis tool and includes both cpu and gpu activity. recommended for modern cuda profiling. 
@@ -22,4 +25,3 @@
 - registers are the fastest (1 cycle), shared memory second fastest (1-2 cycles provided no bank conflicts), global memory (400 - 600 cycles, frequent access should be avoided)
 - a bank conflict is when multiple threads try to access the same memory bank in shared memory at the same time, causing serialization and slowing things down. 
 - typically there are 32 banks per streaming multiprocessor. 
-- 

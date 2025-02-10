@@ -4,14 +4,28 @@
 #include <time.h>
 
 __global__
+void sgemm_coalescing(const float* M, const floa* N, float* P, int Width, int Height){
+    int x = blockIdx.x * BLOCKSIZE + (threadIdx.x / BLOCKSIZE);
+    int y = blockIdx.y * BLOCKSIZE + (threadIdx.x / BLOCKSIZE);
+
+    if((x < Width) && (y < Height)){
+        float tmp = 0.0;
+        for(int i = 0; i < Width; i++){
+            temp += M[x * Width + i] * B[i * Height + y];
+        }
+    }
+    P[x * Height + y] = alpha * tmp + beta * P[x * Height + y];
+}
+
+__global__
 void matMulKernel(const float* M, const float* N, float* P, int Width, int Height) {
     int row = blockDim.y * blockIdx.y + threadIdx.y;
     int col = blockDim.x * blockIdx.x + threadIdx.x;
     
     if ((row < Height) && (col < Width)) { 
         float PValue = 0.0f;
-        for (int i = 0; i < Height; i++) {
-            PValue += M[row * Height + i] * N[i * Width + col];
+        for (int i = 0; i < Width; i++) {
+            PValue += M[row * Width + i] * N[i * Width + col];
         }
         P[row * Width + col] = PValue;
     }

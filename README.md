@@ -8,19 +8,20 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
-|000|-|[PMPP](./notes/000/PMPP-Ch1.pdf)|setup environment, lecture 1 of ECE 408, chapter 1 of PMPP|
-|001|[vecAbsDiff](./kernels/vecAbsDiff.cu)|[PMPP Chapter 2](./notes/001/)|read chapter 2 of pmpp, implemented vector absolute difference kernel|
-|002|[colorToGrayScaleConversion](./kernels/colorToGrayscaleConversion.cu)|[PMPP Chapter 3](./notes/002/)|read half of chapter 2 of pmpp, implemented color to grayscale conversion|
-|003|[imageBlur](./kernels/imageBlur.cu)|[PMPP Chapter 3](./notes/002/)|read parts of image blur and about better ways to handle errors, image blurring logic|
-|004|[gaussianBlur](./kernels/gaussianBlur.cu)|[PMPP Chapter 3](./notes/002/)|built on top of image blur; struggling to understand multidimensionality;|
-|005|[gaussianBlurSharedMemory](./kernels/gaussianBlurSharedMemory.cu)|[PMPP Chapter 3 & exploration](./notes/002/)|built on top of gaussian blur; learnt about shared memory and implemented it;|
-|006|[gaussianBlurSharedMemory with event times](./kernels/gaussianBlurSharedMemory.cu)|[event times and performance measurement](./notes/002/)|added perf measurement code to gaussian blur with shared memory kernel|
-|007|[vector multiply](./kernels/vecMultiply.cu) and [helpers](./kernels/helpers.h)|[internal structure of blocks](./notes/002/)|setup gpu env on new server. studied heirarchy of execution within the streaming multiprocessor. created helpers file.|
-|008|[matrix multiply](./kernels/matrixMultiplication.cu) and [helpers](./kernels/helpers.h)|[matrix multiplication, pinned memory and BLAS](./notes/002/)|read about pinned memory, pageable memory and cudaHostAlloc(). finished chapter 3 of PMPP|
-|009|[matrix transpose](./kernels/matrixTranspose.cu)|[matrix transpose and matrix multiplication blog](./notes/002/)|started reading matrix multiplication blog by siboehm, started chapter 4 of PMPP|
-|010|[face blur](./kernels/objectBlur/)|[read matrix multiplication blog](./notes/002/)|reading matrix multiplication blog by siboehm, using a compiled kernel in python|
-|011|[optimizing matrix multiplication](./kernels/matrixMultiplication.cu)|[matrix multiplication and profiling](./notes/003/)|using nsys and nvprof, reading matrix multiplication blog by siboehm|
+|013|[optimizing matrix multiplication](./kernels/matrixMultiplication.cu)|[optimizing mat mul using coalescing](./notes/003/)|coalescing memory and warp scheduling|
 |012|[shared memory](./kernels/sharedMemory.cu)|[matrix multiplication and shared memory](./notes/003/)|read about shared memory, registers and warps, bank conflicts, reading matrix multiplication blog by siboehm|
+|011|[optimizing matrix multiplication](./kernels/matrixMultiplication.cu)|[matrix multiplication and profiling](./notes/003/)|using nsys and nvprof, reading matrix multiplication blog by siboehm|
+|010|[face blur](./kernels/objectBlur/)|[read matrix multiplication blog](./notes/002/)|reading matrix multiplication blog by siboehm, using a compiled kernel in python|
+|009|[matrix transpose](./kernels/matrixTranspose.cu)|[matrix transpose and matrix multiplication blog](./notes/002/)|started reading matrix multiplication blog by siboehm, started chapter 4 of PMPP|
+|008|[matrix multiply](./kernels/matrixMultiplication.cu) and [helpers](./kernels/helpers.h)|[matrix multiplication, pinned memory and BLAS](./notes/002/)|read about pinned memory, pageable memory and cudaHostAlloc(). finished chapter 3 of PMPP|
+|007|[vector multiply](./kernels/vecMultiply.cu) and [helpers](./kernels/helpers.h)|[internal structure of blocks](./notes/002/)|setup gpu env on new server. studied heirarchy of execution within the streaming multiprocessor. created helpers file.|
+|006|[gaussianBlurSharedMemory with event times](./kernels/gaussianBlurSharedMemory.cu)|[event times and performance measurement](./notes/002/)|added perf measurement code to gaussian blur with shared memory kernel|
+|005|[gaussianBlurSharedMemory](./kernels/gaussianBlurSharedMemory.cu)|[PMPP Chapter 3 & exploration](./notes/002/)|built on top of gaussian blur; learnt about shared memory and implemented it;|
+|004|[gaussianBlur](./kernels/gaussianBlur.cu)|[PMPP Chapter 3](./notes/002/)|built on top of image blur; struggling to understand multidimensionality;|
+|003|[imageBlur](./kernels/imageBlur.cu)|[PMPP Chapter 3](./notes/002/)|read parts of image blur and about better ways to handle errors, image blurring logic|
+|002|[colorToGrayScaleConversion](./kernels/colorToGrayscaleConversion.cu)|[PMPP Chapter 3](./notes/002/)|read half of chapter 2 of pmpp, implemented color to grayscale conversion|
+|001|[vecAbsDiff](./kernels/vecAbsDiff.cu)|[PMPP Chapter 2](./notes/001/)|read chapter 2 of pmpp, implemented vector absolute difference kernel|
+|000|-|[PMPP](./notes/000/PMPP-Ch1.pdf)|setup environment, lecture 1 of ECE 408, chapter 1 of PMPP|
 
 
 
@@ -34,7 +35,7 @@
 ### The Plan:
 
 
-| **Day**  | **Topic**                                      | **Task/Implementation** |**Status**|
+| **Objective**  | **Topic**                                      | **Task/Implementation** |**Status**|
 |----------|----------------------------------------------|-------------------------|-|
 | **Phase 1: Foundations** | **Goal:** Understand CUDA fundamentals, memory hierarchy, and write basic optimized kernels. |||
 | **1**  | CUDA Setup & First Kernel  | Install CUDA, write a vector addition kernel |✅|
