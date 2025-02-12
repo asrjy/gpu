@@ -8,7 +8,8 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
-|014|[matrix multiplication sgemm shared memory](./kernels/matrixMultiplicationMemoryBlocking.cu)|[optimizing mat mul using memory blocing](./notes/003/)|shared memory, memory blocking|
+|015|[matrix multiplication with block tiling](./kernels/matrixMultiplicationBlockTiling.cu)|[optimizing mat mul using block tiling](./notes/003/)|block tiling|
+|014|[matrix multiplication sgemm shared memory](./kernels/matrixMultiplicationMemoryBlocking.cu)|[optimizing mat mul using memory blocking](./notes/003/)|shared memory, memory blocking|
 |013|[optimizing matrix multiplication](./kernels/matrixMultiplication.cu)|[optimizing mat mul using coalescing](./notes/003/)|coalescing memory and warp scheduling|
 |012|[shared memory](./kernels/sharedMemory.cu)|[matrix multiplication and shared memory](./notes/003/)|read about shared memory, registers and warps, bank conflicts, reading matrix multiplication blog by siboehm|
 |011|[optimizing matrix multiplication](./kernels/matrixMultiplication.cu)|[matrix multiplication and profiling](./notes/003/)|using nsys and nvprof, reading matrix multiplication blog by siboehm|
