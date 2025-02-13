@@ -25,3 +25,18 @@
 - registers are the fastest (1 cycle), shared memory second fastest (1-2 cycles provided no bank conflicts), global memory (400 - 600 cycles, frequent access should be avoided)
 - a bank conflict is when multiple threads try to access the same memory bank in shared memory at the same time, causing serialization and slowing things down. 
 - typically there are 32 banks per streaming multiprocessor. 
+
+how l1 and l2 work: 
+- cpu/gpu requests a data. 
+- core first checks if data is in l1 cache. if it's a hit, l1 gets to it. if it's a miss, proceeds to l2. 
+- if data is found in l2, core gets it. slower than l1, but faster than from main memory. if it's a miss, proceed to main memory. 
+- core retrieves from main memory. 
+- data is copied into both l1 and l2 caches, or sometimes just l2 depending on cache policy. 
+
+- cache hits are critical for performance. so writing cache friendly code is important. 
+
+cache friendly techniques:
+- data locality: organize data structures and access patterns so data that is used together is stored closer in memory. so when one piece of data is loaded, related data will also be bought into cache (example: accessing array elements)
+- temporal locality: reuse data that has been loaded into cache as much as possible before it gets evicted. (example: using same variable multiple times within code)
+- blocking/tiling: divide problem into smaller blocks that fit in the cache. process each block completely and be done with it before moving to the next one. 
+- avoid strided access: avoid striding where we skip over multiple elements. try to access contiguosly. 
