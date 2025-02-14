@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|017|[parallel reduction (naive)](./kernels/parallelReductionNaive.cu)|[naive parallel reduction](./notes/003/)|parallel reduction with shared memory|
 |016|[l1 and l2 cache](./kernels/cacheAccess.cu)|[read about l1, l2 cache and how to write cache friendly code](./notes/003/)|l1, l2 cache|
 |015|[matrix multiplication with block tiling](./kernels/matrixMultiplicationBlockTiling.cu)|[optimizing mat mul using block tiling](./notes/003/)|block tiling|
 |014|[matrix multiplication sgemm shared memory](./kernels/matrixMultiplicationMemoryBlocking.cu)|[optimizing mat mul using memory blocking](./notes/003/)|shared memory, memory blocking|
@@ -52,7 +53,7 @@
 | **9**  | Tiled Matrix Multiplication | Further optimize matrix multiplication ||
 | **10** | Register Pressure | Optimize register usage and reduce spilling ||
 | **11** | Warp Execution Model | Avoiding warp divergence ||
-| **12** | Parallel Reduction (Naïve) | Implement sum/max reductions ||
+| **12** | Parallel Reduction (Naïve) | Implement sum/max reductions |✅|
 | **13** | Parallel Reduction (Optimized) | Optimize with warp shuffle (`__shfl_sync`) ||
 | **14** | Code Review & Optimization | Refine and benchmark previous work ||
 | **15** | Parallel Scan (Prefix Sum) | Implement parallel scan algorithm ||
