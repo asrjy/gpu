@@ -40,3 +40,7 @@ cache friendly techniques:
 - temporal locality: reuse data that has been loaded into cache as much as possible before it gets evicted. (example: using same variable multiple times within code)
 - blocking/tiling: divide problem into smaller blocks that fit in the cache. process each block completely and be done with it before moving to the next one. 
 - avoid strided access: avoid striding where we skip over multiple elements. try to access contiguosly. 
+
+
+- `__shfl_sync` is a warp-level shuffle intrinsic. 
+- it allows threads within same warp to exchange data and synchronize within the warp. 

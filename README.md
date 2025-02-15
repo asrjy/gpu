@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|018|[parallel reduction (optimized)](./kernels/parallelReductionOptimized.cu)|[optimized parallel reduction](./notes/003/)|shuffle sync with mask and warps|
 |017|[parallel reduction (naive)](./kernels/parallelReductionNaive.cu)|[naive parallel reduction](./notes/003/)|parallel reduction with shared memory|
 |016|[l1 and l2 cache](./kernels/cacheAccess.cu)|[read about l1, l2 cache and how to write cache friendly code](./notes/003/)|l1, l2 cache|
 |015|[matrix multiplication with block tiling](./kernels/matrixMultiplicationBlockTiling.cu)|[optimizing mat mul using block tiling](./notes/003/)|block tiling|
