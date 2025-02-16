@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|019|[prefix sum (naive)](./kernels/prefixSumNaive.cu)|[parallel prefix sum](./notes/003/)|prefix sum, parallel scanning|
 |018|[parallel reduction (optimized)](./kernels/parallelReductionOptimized.cu)|[optimized parallel reduction](./notes/003/)|shuffle sync with mask and warps|
 |017|[parallel reduction (naive)](./kernels/parallelReductionNaive.cu)|[naive parallel reduction](./notes/003/)|parallel reduction with shared memory|
 |016|[l1 and l2 cache](./kernels/cacheAccess.cu)|[read about l1, l2 cache and how to write cache friendly code](./notes/003/)|l1, l2 cache|
@@ -55,7 +56,7 @@
 | **10** | Register Pressure | Optimize register usage and reduce spilling ||
 | **11** | Warp Execution Model | Avoiding warp divergence ||
 | **12** | Parallel Reduction (Naïve) | Implement sum/max reductions |✅|
-| **13** | Parallel Reduction (Optimized) | Optimize with warp shuffle (`__shfl_sync`) ||
+| **13** | Parallel Reduction (Optimized) | Optimize with warp shuffle (`__shfl_sync`) |✅|
 | **14** | Code Review & Optimization | Refine and benchmark previous work ||
 | **15** | Parallel Scan (Prefix Sum) | Implement parallel scan algorithm ||
 | **16** | Histogram (Naïve) | Implement histogram using global memory atomics ||

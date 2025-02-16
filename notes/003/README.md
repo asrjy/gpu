@@ -44,3 +44,5 @@ cache friendly techniques:
 
 - `__shfl_sync` is a warp-level shuffle intrinsic. 
 - it allows threads within same warp to exchange data and synchronize within the warp. 
+
+- parallel scan is used in many areas like tokenizing stream of characters, parallel sorting, graph processing tasks etc.,
