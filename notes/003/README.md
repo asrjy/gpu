@@ -46,3 +46,7 @@ cache friendly techniques:
 - it allows threads within same warp to exchange data and synchronize within the warp. 
 
 - parallel scan is used in many areas like tokenizing stream of characters, parallel sorting, graph processing tasks etc.,
+
+
+hillis steele algorithm:
+- key idea is to perform repeated additions with increasing powers of 2 as offset. it needs an auxiilary array. 

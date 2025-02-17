@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|020|[hillis steele prefix sum (optimized) ](./kernels/prefixSumHillisSteele.cu)|[optimized parallel prefix sum](./notes/003/)|hillis steele with shared memory|
 |019|[prefix sum (naive)](./kernels/prefixSumNaive.cu)|[parallel prefix sum](./notes/003/)|prefix sum, parallel scanning|
 |018|[parallel reduction (optimized)](./kernels/parallelReductionOptimized.cu)|[optimized parallel reduction](./notes/003/)|shuffle sync with mask and warps|
 |017|[parallel reduction (naive)](./kernels/parallelReductionNaive.cu)|[naive parallel reduction](./notes/003/)|parallel reduction with shared memory|
@@ -58,7 +59,7 @@
 | **12** | Parallel Reduction (Naïve) | Implement sum/max reductions |✅|
 | **13** | Parallel Reduction (Optimized) | Optimize with warp shuffle (`__shfl_sync`) |✅|
 | **14** | Code Review & Optimization | Refine and benchmark previous work ||
-| **15** | Parallel Scan (Prefix Sum) | Implement parallel scan algorithm ||
+| **15** | Parallel Scan (Prefix Sum) | Implement parallel scan algorithm |✅|
 | **16** | Histogram (Naïve) | Implement histogram using global memory atomics ||
 | **17** | Histogram (Optimized) | Use shared memory to optimize histogram ||
 | **18** | Parallel Sorting | Implement bitonic or bucket sort ||
