@@ -8,6 +8,8 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|022|[register pressure and spilling ](./kernels/registerPressureSpilling.cu)|[reducing register pressure](./notes/003/)|spilling, high and low register pressure|
+|021|[optimizing warp divergence ](./kernels/warpDivergence.cu)|[optimized warp divergence](./notes/003/)|warp divergence and optimzing for it|
 |020|[hillis steele prefix sum (optimized) ](./kernels/prefixSumHillisSteele.cu)|[optimized parallel prefix sum](./notes/003/)|hillis steele with shared memory|
 |019|[prefix sum (naive)](./kernels/prefixSumNaive.cu)|[parallel prefix sum](./notes/003/)|prefix sum, parallel scanning|
 |018|[parallel reduction (optimized)](./kernels/parallelReductionOptimized.cu)|[optimized parallel reduction](./notes/003/)|shuffle sync with mask and warps|
@@ -54,8 +56,8 @@
 | **7**  | Profiling Basics | Use `nvprof` and `nsys` to analyze kernels |✅|
 | **8**  | L1/L2 Cache Effects | Study cache behavior and memory bandwidth |✅|
 | **9**  | Tiled Matrix Multiplication | Further optimize matrix multiplication ||
-| **10** | Register Pressure | Optimize register usage and reduce spilling ||
-| **11** | Warp Execution Model | Avoiding warp divergence ||
+| **10** | Register Pressure | Optimize register usage and reduce spilling |✅|
+| **11** | Warp Execution Model | Avoiding warp divergence |✅|
 | **12** | Parallel Reduction (Naïve) | Implement sum/max reductions |✅|
 | **13** | Parallel Reduction (Optimized) | Optimize with warp shuffle (`__shfl_sync`) |✅|
 | **14** | Code Review & Optimization | Refine and benchmark previous work ||

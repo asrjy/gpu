@@ -50,3 +50,20 @@ cache friendly techniques:
 
 hillis steele algorithm:
 - key idea is to perform repeated additions with increasing powers of 2 as offset. it needs an auxiilary array. 
+
+
+warp divergence:
+- it occurs when threads within same warp (group of 32 threads) take different execution paths due to conditional statements
+- this causes serialization within the warp because the warp must execute all branches taken by it's threads. this reduces performance and parallelism obviously. 
+- we can avoid warp divergence by avoiding conditionals, or by having all threads within a warp having the same conditional statement. 
+- modern nvidia gpu's have introduced thread scheduling which mitigates warp divergence. 
+- reducing warp diveregence is a balancing act between code simplicity and performance optimization. 
+
+
+register pressure:
+- registers are the fastest memory accessible to each thread. but they are limited in number. 
+- register pressure is the situation where a cuda kernel requires more registers than there are physically available per thread. 
+- basically any variable created inside a kernel is a register. 
+- `nvcc --maxrregcount=32 kernel.cu` is a compiler flag to limit register usage during compilation. 
+- we can use shared memory to reduce register usage. 
+- 
