@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|023|[histogram with atomicadds ](./kernels/histogramAtomicAdd.cu)|[using atomic adds](./notes/003/)|atomic operations, race conditions|
 |022|[register pressure and spilling ](./kernels/registerPressureSpilling.cu)|[reducing register pressure](./notes/003/)|spilling, high and low register pressure|
 |021|[optimizing warp divergence ](./kernels/warpDivergence.cu)|[optimized warp divergence](./notes/003/)|warp divergence and optimzing for it|
 |020|[hillis steele prefix sum (optimized) ](./kernels/prefixSumHillisSteele.cu)|[optimized parallel prefix sum](./notes/003/)|hillis steele with shared memory|
@@ -62,7 +63,7 @@
 | **13** | Parallel Reduction (Optimized) | Optimize with warp shuffle (`__shfl_sync`) |✅|
 | **14** | Code Review & Optimization | Refine and benchmark previous work ||
 | **15** | Parallel Scan (Prefix Sum) | Implement parallel scan algorithm |✅|
-| **16** | Histogram (Naïve) | Implement histogram using global memory atomics ||
+| **16** | Histogram (Naïve) | Implement histogram using global memory atomics |✅|
 | **17** | Histogram (Optimized) | Use shared memory to optimize histogram ||
 | **18** | Parallel Sorting | Implement bitonic or bucket sort ||
 | **19** | k-Nearest Neighbors | Implement kNN search using CUDA ||

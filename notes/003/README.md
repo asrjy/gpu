@@ -66,4 +66,13 @@ register pressure:
 - basically any variable created inside a kernel is a register. 
 - `nvcc --maxrregcount=32 kernel.cu` is a compiler flag to limit register usage during compilation. 
 - we can use shared memory to reduce register usage. 
-- 
+
+
+atomic add:
+- `atomicAdd` is a special operation that ensures a read-modify-write sequence happens as one uninterruped (atomic) operation. 
+- they ensure updates happen one at a time and no race conditions occur. 
+- race conditions occurs when multiple threads try to access and modify same data simultaneously and the final result depends on the order of thread execution. 
+- slower than normal operations due to serialization. 
+- it is recommended to use shared memory with atomic adds whenever possible. 
+- try to reduce usage, but modern GPUs have improved atomic operation performance. 
+- CUDA-MEMCHECK chan be used to help detect race conditions.
