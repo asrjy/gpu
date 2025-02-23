@@ -76,3 +76,9 @@ atomic add:
 - it is recommended to use shared memory with atomic adds whenever possible. 
 - try to reduce usage, but modern GPUs have improved atomic operation performance. 
 - CUDA-MEMCHECK chan be used to help detect race conditions.
+
+bitonic sort:
+- works best when N is power of 2
+- good for smaller arrays 
+- no atomic operations needed
+- regular memory access patterns

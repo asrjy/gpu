@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|025|[bitonic sort ](./kernels/bitonicSort.cu)|[sorting](./notes/003/)|bitonic sort|
 |024|[histogram with shared memory and atomic add ](./kernels/histogramSharedMemory.cu)|[using shared memory and atomic adds](./notes/003/)|atomic operations, race conditions|
 |023|[histogram with atomicadds ](./kernels/histogramAtomicAdd.cu)|[using atomic adds](./notes/003/)|atomic operations, race conditions|
 |022|[register pressure and spilling ](./kernels/registerPressureSpilling.cu)|[reducing register pressure](./notes/003/)|spilling, high and low register pressure|
