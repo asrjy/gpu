@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|026|[bitonic sort with shared memory](./kernels/bitonicSortSharedMemory.cu)|[sorting](./notes/003/)|bitonic sort with shared memory|
 |025|[bitonic sort ](./kernels/bitonicSort.cu)|[sorting](./notes/003/)|bitonic sort|
 |024|[histogram with shared memory and atomic add ](./kernels/histogramSharedMemory.cu)|[using shared memory and atomic adds](./notes/003/)|atomic operations, race conditions|
 |023|[histogram with atomicadds ](./kernels/histogramAtomicAdd.cu)|[using atomic adds](./notes/003/)|atomic operations, race conditions|
