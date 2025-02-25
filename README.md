@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|027|[baseline gpu knn](./kernels/knnBase.cu)|[knn](./notes/003/)|knn|
 |026|[bitonic sort with shared memory](./kernels/bitonicSortSharedMemory.cu)|[sorting](./notes/003/)|bitonic sort with shared memory|
 |025|[bitonic sort ](./kernels/bitonicSort.cu)|[sorting](./notes/003/)|bitonic sort|
 |024|[histogram with shared memory and atomic add ](./kernels/histogramSharedMemory.cu)|[using shared memory and atomic adds](./notes/003/)|atomic operations, race conditions|
@@ -68,7 +69,7 @@
 | **15** | Parallel Scan (Prefix Sum) | Implement parallel scan algorithm |✅|
 | **16** | Histogram (Naïve) | Implement histogram using global memory atomics |✅|
 | **17** | Histogram (Optimized) | Use shared memory to optimize histogram |✅|
-| **18** | Parallel Sorting | Implement bitonic or bucket sort ||
+| **18** | Parallel Sorting | Implement bitonic or bucket sort |✅|
 | **19** | k-Nearest Neighbors | Implement kNN search using CUDA ||
 | **20** | Code Review & Benchmarking | Optimize and compare previous implementations ||
 | **Phase 2: ML Operators** | **Goal:** Implement and optimize core ML kernels. |||
