@@ -38,6 +38,30 @@ void compute_distances(float* trainData, float* testPoint, DistanceIndex* distan
     }
 }
 
+__global__
+void compute_distances_shared(float* trainData, float* testPoint, DistanceIndex* distances, int numTrainingPoints, int numFeatures){
+    extern __shared__ float sharedTest[];
+
+    if(threadIdx.x < numFeatures){
+        sharedTest[threadIdx.x] = testPoint[threadIdx.x];
+    }
+    __syncthreads();
+
+    int tid = blockIdx.x * blockDim.x + threadIdx.x;
+
+    if(tid < numTrainingPoints){
+        float distance = 0.0f;
+
+        for(int i  = 0; i < numFeatures; i++){
+            float diff = trainData[tid * numFeatures + i] - sharedTest[i];
+            distance += diff * diff;
+        }
+
+        distances[tid].distance = sqrt(distance);
+        distances[tid].index = tid;
+    }
+}
+
 void knn_cuda(float* h_trainData, float* h_testPoint, int numTrainingPoints, int numFeatures, int k){
     float *d_trainData, *d_testPoint;
     DistanceIndex *d_distances;
