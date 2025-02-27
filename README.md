@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|029|[knn with tiled distance computation](./kernels/knnBase.cu)|[knn](./notes/003/)|knn + tiling|
 |028|[knn with shared memory distance calculation](./kernels/knnBase.cu)|[knn](./notes/003/)|knn + shared memory|
 |027|[baseline gpu knn](./kernels/knnBase.cu)|[knn](./notes/003/)|knn|
 |026|[bitonic sort with shared memory](./kernels/bitonicSortSharedMemory.cu)|[sorting](./notes/003/)|bitonic sort with shared memory|

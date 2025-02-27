@@ -62,6 +62,41 @@ void compute_distances_shared(float* trainData, float* testPoint, DistanceIndex*
     }
 }
 
+__global__
+void compute_distances_tiled(float* trainData, float* testPoint, DistanceIndex* distances, int numTrainingPoints, int numFeatures){
+    extern __shared__ float shared[];
+    float* sharedTest = shared;
+    float* sharedTrain = &shared[numFeatures];
+
+    int tid = blockIdx.x * blockDim.x + threadIdx.x;
+
+    if(threadIdx.x < numFeatures){
+        sharedTest[threadIdx.x] = testPoint[threadIdx.x];
+    }
+
+    float distance = 0.0f;
+
+    for(int tile = 0; tile < numFeatures; tile += blockdim.x){
+        // load training data tile 
+        if(tid < numTrainingPoints && (tile + threadIdx.x) < numFeatures){
+            sharedTrain[threadIdx.x] = trainData[tid * numFeatures + tile + threadIdx.x];
+        }
+        __syncthreads();
+
+        if(tid < numTrainingPoints){
+            for(int i = 0; i < blockDim.x && (tile + i) < numFeatures; i++){
+                float diff = sharedTrain[i] - sharedTest[tile + i];
+                distance += diff * diff;
+            }
+        }
+        __syncthreads();
+    }
+    if(tid < numTrainingPoints){
+        distances[tid].distance = sqrt(distance);
+        distances[tid].index = tid;
+    }
+}
+
 void knn_cuda(float* h_trainData, float* h_testPoint, int numTrainingPoints, int numFeatures, int k){
     float *d_trainData, *d_testPoint;
     DistanceIndex *d_distances;
