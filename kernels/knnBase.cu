@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <random>
 #include <chrono>
+#include <thrust/sort.h>
+#include <thrust/device_ptr.h>
 #include "helpers.h"
 
 struct DistanceIndex {
@@ -76,7 +78,7 @@ void compute_distances_tiled(float* trainData, float* testPoint, DistanceIndex* 
 
     float distance = 0.0f;
 
-    for(int tile = 0; tile < numFeatures; tile += blockdim.x){
+    for(int tile = 0; tile < numFeatures; tile += blockDim.x){
         // load training data tile 
         if(tid < numTrainingPoints && (tile + threadIdx.x) < numFeatures){
             sharedTrain[threadIdx.x] = trainData[tid * numFeatures + tile + threadIdx.x];
@@ -115,6 +117,44 @@ void knn_cuda(float* h_trainData, float* h_testPoint, int numTrainingPoints, int
     DistanceIndex* h_distances = new DistanceIndex[numTrainingPoints];
     cudaMemcpy(h_distances, d_distances, numTrainingPoints * sizeof(DistanceIndex), cudaMemcpyDeviceToHost);
     
+    // sort distances 
+    std::sort(h_distances, h_distances + numTrainingPoints);
+    
+    printf("K nearest neighbors:\n");
+    for (int i = 0; i < k; i++) {
+        printf("Index: %d, Distance: %f\n", 
+               h_distances[i].index, h_distances[i].distance);
+    }
+
+    cudaFree(d_trainData);
+    cudaFree(d_testPoint);
+    cudaFree(d_distances);
+    delete[] h_distances;
+}
+
+void knn_cuda_thrust(float* h_trainData, float* h_testPoint, int numTrainingPoints, int numFeatures, int k){
+    float *d_trainData, *d_testPoint;
+    DistanceIndex *d_distances;
+
+    cudaMalloc(&d_trainData, numTrainingPoints * numFeatures * sizeof(float));
+    cudaMalloc(&d_testPoint, numFeatures * sizeof(float));
+    cudaMalloc(&d_distances, numTrainingPoints * sizeof(DistanceIndex));
+
+    cudaMemcpy(d_trainData, h_trainData, numTrainingPoints * numFeatures * sizeof(float), cudaMemcpyHostToDevice);
+    cudaMemcpy(d_testPoint, h_testPoint, numFeatures * sizeof(float), cudaMemcpyHostToDevice);
+
+    int blockSize = 256;
+    int numBlocks = (numTrainingPoints + blockSize - 1) / blockSize;
+
+    compute_distances_shared<<<numBlocks, blockSize, (numFeatures + blockSize) * sizeof(float)>>>(d_trainData, d_testPoint, d_distances, numTrainingPoints, numFeatures);
+
+    thrust::device_ptr<DistanceIndex> thrust_distances(d_distances);
+    thrust::sort(thrust_distances, thrust_distances + numTrainingPoints);
+
+    // copying only k nearest back to host 
+    DistanceIndex* h_distances = new DistanceIndex[k];
+    cudaMemcpy(h_distances, d_distances, k * sizeof(DistanceIndex), cudaMemcpyDeviceToHost);
+
     // sort distances 
     std::sort(h_distances, h_distances + numTrainingPoints);
     
@@ -189,7 +229,7 @@ int main() {
     // gpu knn
     auto gpu_start = std::chrono::high_resolution_clock::now();
     
-    knn_cuda(h_trainData, h_testPoint, numTrainingPoints, numFeatures, k);
+    knn_cuda_thrust(h_trainData, h_testPoint, numTrainingPoints, numFeatures, k);
     
     auto gpu_end = std::chrono::high_resolution_clock::now();
     auto gpu_duration = std::chrono::duration_cast<std::chrono::milliseconds>(gpu_end - gpu_start);

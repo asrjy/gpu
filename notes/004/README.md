@@ -1,0 +1,2 @@
+- each streaming multiprocessor has streaming processors/cuda cores. 
+- 
