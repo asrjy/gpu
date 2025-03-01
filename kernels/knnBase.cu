@@ -99,6 +99,22 @@ void compute_distances_tiled(float* trainData, float* testPoint, DistanceIndex* 
     }
 }
 
+__global__
+void compute_distances_batch(float* traiNData, float* testData, DistanceIndex* distances, int numTrainingPoints, int numTestPoints, int numFeatures){
+    int trainIdx = blockIdx.x * blockDim.x + threadIdx.x;
+    int testIdx = blockIdx.y;
+
+    if(trainIdx < numTrainingPoints){
+        float distance = 0.0f;
+        for(int i = 0; i < numFeatures; i++){
+            float diff = trainData[trainIdx * numFeatures + i] - testData[testIdx * numFeatures + i];
+            distance += diff * diff;
+        }
+        distances[testIdx * numTrainingPoints + trainIdx].distance = sqrt(distance);
+        distances[testIdx * numTrainingPoints + trainIdx].indx = trainIdx;
+    }
+}
+
 void knn_cuda(float* h_trainData, float* h_testPoint, int numTrainingPoints, int numFeatures, int k){
     float *d_trainData, *d_testPoint;
     DistanceIndex *d_distances;
