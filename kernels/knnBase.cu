@@ -100,6 +100,25 @@ void compute_distances_tiled(float* trainData, float* testPoint, DistanceIndex* 
 }
 
 __global__
+void compute_distances_vectorized(float4* trainData, float4* testPoint, DistanceIndex* distances, int numTrainingPoints){
+    int tid = blockIdx.x * blockDim.x + threadIdx.x;
+
+    if(tid < numTrainingPoints){
+        float4 train = trainData[tid];
+        float4 test = testPoint[0];
+
+        float distance = 0.0f;
+        distance += (train.x - test.x) * (train.x - test.x);
+        distance += (train.y - test.y) * (train.y - test.y);
+        distance += (train.z - test.z) * (train.z - test.z);
+        distance += (train.w - test.w) * (train.w - test.w);
+        
+        distances[tid].distance = sqrt(distance);
+        distances[tid].index = tid;
+    }
+}
+
+__global__
 void compute_distances_batch(float* traiNData, float* testData, DistanceIndex* distances, int numTrainingPoints, int numTestPoints, int numFeatures){
     int trainIdx = blockIdx.x * blockDim.x + threadIdx.x;
     int testIdx = blockIdx.y;

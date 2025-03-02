@@ -82,3 +82,8 @@ bitonic sort:
 - good for smaller arrays 
 - no atomic operations needed
 - regular memory access patterns
+
+float4
+- float4 is a builtin cuda vector type that can pack 4 floating point values. 
+- there are also other similar types like float2, float3, int4, double2 etc.,
+- these can be used to coalesce transactions and memory bandwidth because of SIMD property.  

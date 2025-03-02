@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|032|[knn with vectorized distance computation](./kernels/knnBase.cu)|[float4](./notes/003/)|knn + vectorized distance computation + float4 operations|
 |031|[knn with batch distance computation](./kernels/knnBase.cu)|[knn](./notes/003/)|knn + batch distance computation|
 |030|[knn with thrust for sorting](./kernels/knnBase.cu)|[knn](./notes/003/)|knn + thrust sorting|
 |029|[knn with tiled distance computation](./kernels/knnBase.cu)|[knn](./notes/003/)|knn + tiling|
