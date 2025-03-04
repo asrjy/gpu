@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|034|[benchmarking in triton](./triton/vec_add.py)|[triton](./notes/003/)|triton benchmarking + plots|
 |033|[vector addition in triton](./triton/vec_add.py)|[triton](./notes/003/)|triton setup + vector addition|
 |032|[knn with vectorized distance computation](./cuda/knnBase.cu)|[float4](./notes/003/)|knn + vectorized distance computation + float4 operations|
 |031|[knn with batch distance computation](./cuda/knnBase.cu)|[knn](./notes/003/)|knn + batch distance computation|
