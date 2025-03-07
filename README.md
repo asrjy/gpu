@@ -8,7 +8,8 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
-|036|[triton puzzles loading 2d tensors](./triton/puzzles.ipynb)|[triton](./notes/003/)|2d tensor and tl.store|
+|037|[triton puzzles: blocks and loading](./triton/puzzles.ipynb)|[triton](./notes/003/)|2d tensor loading as blocks|
+|036|[triton puzzles: loading 2d tensors](./triton/puzzles.ipynb)|[triton](./notes/003/)|2d tensor and tl.store|
 |035|[triton puzzles](./triton/puzzles.ipynb)|[triton](./notes/003/)|tritonviz + debugging meson + puzzles environment setup|
 |034|[benchmarking in triton](./triton/vec_add.py)|[triton](./notes/003/)|triton benchmarking + plots|
 |033|[vector addition in triton](./triton/vec_add.py)|[triton](./notes/003/)|triton setup + vector addition|
