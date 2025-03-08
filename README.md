@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|038|[triton puzzles: constant addition](./triton/puzzles.ipynb)|[triton](./notes/003/)|constant addition|
 |037|[triton puzzles: blocks and loading](./triton/puzzles.ipynb)|[triton](./notes/003/)|2d tensor loading as blocks|
 |036|[triton puzzles: loading 2d tensors](./triton/puzzles.ipynb)|[triton](./notes/003/)|2d tensor and tl.store|
 |035|[triton puzzles](./triton/puzzles.ipynb)|[triton](./notes/003/)|tritonviz + debugging meson + puzzles environment setup|
