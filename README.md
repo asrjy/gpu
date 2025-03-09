@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|039|[triton puzzles: constant addition with varying block sizes](./triton/puzzles.ipynb)|[triton](./notes/003/)|constant addition to vector|
 |038|[triton puzzles: constant addition](./triton/puzzles.ipynb)|[triton](./notes/003/)|constant addition|
 |037|[triton puzzles: blocks and loading](./triton/puzzles.ipynb)|[triton](./notes/003/)|2d tensor loading as blocks|
 |036|[triton puzzles: loading 2d tensors](./triton/puzzles.ipynb)|[triton](./notes/003/)|2d tensor and tl.store|
