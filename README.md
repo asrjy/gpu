@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|042|[triton puzzles: fused matmul + relu](./triton/puzzles.ipynb)|[triton](./notes/003/)|fused matrix multiplication and relu|
 |041|[triton puzzles: vector addition, row to col](./triton/puzzles.ipynb)|[triton](./notes/003/)|vector addition row and column vectors|
 |040|[triton puzzles: vector addition](./triton/puzzles.ipynb)|[triton](./notes/003/)|vector addition|
 |039|[triton puzzles: constant addition with varying block sizes](./triton/puzzles.ipynb)|[triton](./notes/003/)|constant addition to vector|
