@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|045|[triton puzzles: long softmax v2](./triton/puzzles.ipynb)|[triton](./notes/003/)|softmax on logits, v2|
 |045|[triton puzzles: long softmax](./triton/puzzles.ipynb)|[triton](./notes/003/)|softmax on logits|
 |044|[triton puzzles: long sum](./triton/puzzles.ipynb)|[triton](./notes/003/)|sum of batch of numbers|
 |043|[triton puzzles: matmul + relu](./triton/puzzles.ipynb)|[triton](./notes/003/)|matrix multiplication and relu|
