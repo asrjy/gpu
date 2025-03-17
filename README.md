@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|047|[triton puzzles: flash attention](./triton/puzzles.ipynb)|[triton](./notes/003/)|started flash attention|
 |046|[triton puzzles: long softmax v2](./triton/puzzles.ipynb)|[triton](./notes/003/)|softmax on logits, v2|
 |045|[triton puzzles: long softmax](./triton/puzzles.ipynb)|[triton](./notes/003/)|softmax on logits|
 |044|[triton puzzles: long sum](./triton/puzzles.ipynb)|[triton](./notes/003/)|sum of batch of numbers|
