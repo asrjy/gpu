@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|048|[triton: vector subtraction bug fix](./triton/vec_sub.py)|[triton](./notes/003/)|fixing bugs in vec sub|
 |048|[triton: vector subtraction](./triton/vec_sub.py)|[triton](./notes/003/)|touching base with basics|
 |047|[triton puzzles: flash attention](./triton/puzzles.ipynb)|[triton](./notes/003/)|started flash attention|
 |046|[triton puzzles: long softmax v2](./triton/puzzles.ipynb)|[triton](./notes/003/)|softmax on logits, v2|
