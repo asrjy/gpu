@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|050|[triton: naive matmul for turing](./triton/naive_matmul.py)|[triton](./notes/003/)|fixing naive matrix multiplication for turing gpu|
 |050|[triton: naive matmul](./triton/naive_matmul.py)|[triton](./notes/003/)|naive matrix multiplication|
 |049|[triton: vector subtraction bug fix](./triton/vec_sub.py)|[triton](./notes/003/)|fixing bugs in vec sub|
 |048|[triton: vector subtraction](./triton/vec_sub.py)|[triton](./notes/003/)|touching base with basics|
