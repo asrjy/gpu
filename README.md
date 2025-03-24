@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|054|[triton: fused softmax](./triton/fused_softmax.py)|[triton](./notes/005/)|ideating fused implementation|
 |053|[triton: fused softmax](./triton/fused_softmax.py)|[triton](./notes/005/)|naive implementation|
 |052|[triton: vector subtract benchmarking](./triton/vec_sub.py)|[triton](./notes/005/)|added benchmarks for vector subtract|
 |051|[triton: naive matmul for turing](./triton/naive_matmul.py)|[triton](./notes/003/)|fixing naive matrix multiplication for turing gpu|
