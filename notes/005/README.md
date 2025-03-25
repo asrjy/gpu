@@ -11,3 +11,4 @@
 - `@triton.testing.perf_report` is a decorator that's part of the triton built in utility that lets us benchmark custom ops. it lets us set the conditions under which the benchmark will be performed. 
 - `torch.jit.script` takes python code and converts it to a static graph, essentially converting it to C++ ahead of time. 
 - `torch.compile()` is more modern and flexible that `torch.jit.script`. it can handle dynamic code unlike `torch.compile.script` and optimizes code as it runs.
+- `tl.range()` acts as an iterator. 

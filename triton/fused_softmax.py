@@ -38,4 +38,20 @@ def softmax_kernel(
     each thread will load a strided set of rows, and writes the softmax value to the output
     """
     row_start = tl.program_id(0)
+    # each propgram will handle row_step number of rows
     row_step = tl.num_programs(0)
+
+    for row_idx in tl.range(row_start, n_rows, row_step, num_stages = num_stages):
+        row_start_ptr = x_ptr + row_idx * x_stride
+        col_offsets = tl.arange(0, BLOCK_SIZE) 
+        input_ptrs = row_start_ptr + col_offsets
+        mask = col_offsets < n_cols
+        row = tl.load(input_ptrs, mask=mask, other=float('-inf')) 
+        row_minus_max = row - tl.max(row, axis=0)
+        numerator = tl.exp(row_minus_max)
+        denominator = tl.sum(numerator, axis=0)
+        softmax_output = numerator / denominator
+
+        # write output back to DRAM
+        output_row_start_ptr = y_ptr + row_idx * y_stride
+        tl.store(output_row_start_ptr + col_offsets, softmax_output, mask=mask)
