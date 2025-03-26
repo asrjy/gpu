@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|056|[triton: fused softmax](./triton/fused_softmax.py)|[triton](./notes/005/)|understanding fused implementation|
 |055|[triton: fused softmax](./triton/fused_softmax.py)|[triton](./notes/005/)|fused implementation|
 |054|[triton: fused softmax](./triton/fused_softmax.py)|[triton](./notes/005/)|ideating fused implementation|
 |053|[triton: fused softmax](./triton/fused_softmax.py)|[triton](./notes/005/)|naive implementation|
