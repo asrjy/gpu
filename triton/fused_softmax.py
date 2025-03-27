@@ -61,6 +61,22 @@ def softmax_kernel(
         tl.store(output_row_start_ptr + col_offsets, softmax_output, mask=mask)
 
 
+# fetching specifications of gpu before kernel call 
+properties = triton.runtime.driver.active.utils.get_device_properties(DEVICE.index)
+# number of streaming multiprocessors
+NUM_SM = properties["multiprocessor_count"] 
+# number of registers, the fastest memory on the gpu 
+NUM_REGS = properties["max_num_regs"] 
+# each sm has it's own sram. since each sm will have multiple programs within itself, we can divide this sram within them. 
+TOTAL_SRAM_PER_SM = properties["max_shared_mem"] 
+# warp is a group of threads that execute together. 
+WARP_SIZE = properties["warpSize"]
 
-# Embeddings Cost: 0.04$ (~ 300K tokens)
-# LLM Calls Cost (Feynman not included): 0.002$ 
+
+def softmax(x):
+    """
+    this will allocate space for the output tensor and enque the kernel call with the appropriate block and grid sizes.
+    this is not connected to pytorch graph, meaning it doesnt support backprop. 
+    """
+    assert x.ndim == 2
+    n_rows, n_cols = x.shape
