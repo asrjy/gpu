@@ -65,7 +65,7 @@ def softmax_kernel(
 properties = triton.runtime.driver.active.utils.get_device_properties(DEVICE.index)
 # number of streaming multiprocessors
 NUM_SM = properties["multiprocessor_count"] 
-# number of registers, the fastest memory on the gpu 
+# number of registers, the fastest memory on the gpu d
 NUM_REGS = properties["max_num_regs"] 
 # each sm has it's own sram. since each sm will have multiple programs within itself, we can divide this sram within them. 
 TOTAL_SRAM_PER_SM = properties["max_shared_mem"] 
@@ -80,3 +80,34 @@ def softmax(x):
     """
     assert x.ndim == 2
     n_rows, n_cols = x.shape
+
+    BLOCK_SIZE = triton.next_power_of_2(n_cols)
+    num_warps = 4
+    if BLOCK_SIZE >= 2048:
+        num_warps = 8
+    if BLOCK_SIZE >= 4096:
+        num_warps = 16
+    num_stages = 4 if TOTAL_SRAM_PER_SM > 200_000 else 2
+    y = torch.empty_like(x)
+    kernel = softmax_kernel.warmup(x, y, 
+                                    x.stride(0), y.stride(0), 
+                                    n_rows, n_cols,
+                                    BLOCK_SIZE=BLOCK_SIZE,
+                                    num_stages=num_stages,
+                                    num_warps=num_warps,
+                                    grid=(1,))
+    
+    kernel._init_handles()
+    n_regs = kernel.n_regs
+    sram_needed_per_program = kernel.metadata.shared 
+    reg_occupancy = NUM_REGS // (n_regs * WARP_SIZE * num_warps)
+    sram_occupancy = TOTAL_SRAM_PER_SM // sram_needed_per_program
+    programs_per_sm = min(reg_occupancy, sram_occupancy)
+    num_programs = min(NUM_SM * programs_per_sm, n_rows)
+    grid = (num_programs, 1, 1)
+    kernel[grid](
+        x, y,
+        x.stride(0), y.stride(0),
+        n_rows, n_cols,
+    )
+    return y
