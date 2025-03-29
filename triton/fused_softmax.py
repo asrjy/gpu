@@ -78,17 +78,31 @@ def softmax(x):
     this will allocate space for the output tensor and enque the kernel call with the appropriate block and grid sizes.
     this is not connected to pytorch graph, meaning it doesnt support backprop. 
     """
+    # Ensure input is a 2D tensor
     assert x.ndim == 2
     n_rows, n_cols = x.shape
 
+    # Choose block size as the next power of 2 of the number of columns
+    # This ensures efficient memory access patterns
     BLOCK_SIZE = triton.next_power_of_2(n_cols)
+    
+    # Set number of warps based on the block size
+    # Larger blocks need more warps for better parallelism
     num_warps = 4
     if BLOCK_SIZE >= 2048:
         num_warps = 8
     if BLOCK_SIZE >= 4096:
         num_warps = 16
+    
+    # Choose number of pipeline stages based on available SRAM
+    # More stages can improve performance by hiding memory latency
     num_stages = 4 if TOTAL_SRAM_PER_SM > 200_000 else 2
+    
+    # Allocate output tensor with same shape and dtype as input
     y = torch.empty_like(x)
+    
+    # Warmup the kernel with a dummy run to compile it
+    # This also helps with performance by caching the compiled kernel
     kernel = softmax_kernel.warmup(x, y, 
                                     x.stride(0), y.stride(0), 
                                     n_rows, n_cols,
@@ -97,17 +111,31 @@ def softmax(x):
                                     num_warps=num_warps,
                                     grid=(1,))
     
+    # Initialize kernel handles to access metadata
     kernel._init_handles()
-    n_regs = kernel.n_regs
-    sram_needed_per_program = kernel.metadata.shared 
-    reg_occupancy = NUM_REGS // (n_regs * WARP_SIZE * num_warps)
-    sram_occupancy = TOTAL_SRAM_PER_SM // sram_needed_per_program
+    
+    # Calculate resource usage to determine optimal grid size
+    n_regs = kernel.n_regs  # Number of registers used per thread
+    sram_needed_per_program = kernel.metadata.shared  # Shared memory needed per program
+    
+    # Calculate occupancy based on register and SRAM limitations
+    reg_occupancy = NUM_REGS // (n_regs * WARP_SIZE * num_warps)  # How many programs fit based on register usage
+    sram_occupancy = TOTAL_SRAM_PER_SM // sram_needed_per_program  # How many programs fit based on SRAM usage
+    
+    # Take the minimum of both constraints to determine programs per SM
     programs_per_sm = min(reg_occupancy, sram_occupancy)
+    
+    # Calculate total number of programs to launch, capped by input size
     num_programs = min(NUM_SM * programs_per_sm, n_rows)
+    
+    # Set grid dimensions for kernel launch
     grid = (num_programs, 1, 1)
+    
+    # Launch the kernel with the calculated grid size
     kernel[grid](
-        x, y,
-        x.stride(0), y.stride(0),
-        n_rows, n_cols,
+        x, y,  # Input and output tensors
+        x.stride(0), y.stride(0),  # Strides for efficient memory access
+        n_rows, n_cols,  # Dimensions of the input
     )
+    
     return y
