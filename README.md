@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|060|[triton: fused softmax](./triton/fused_softmax.py)|[triton](./notes/005/)|kernel call test function|
 |059|[triton: fused softmax](./triton/fused_softmax.py)|[triton](./notes/005/)|kernel call wrapper testing|
 |058|[triton: fused softmax](./triton/fused_softmax.py)|[triton](./notes/005/)|kernel call wrapper implementation|
 |057|[triton: fused softmax](./triton/fused_softmax.py)|[triton](./notes/005/)|gpu specs and kernel call wrapper|

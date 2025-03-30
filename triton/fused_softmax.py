@@ -139,3 +139,12 @@ def softmax(x):
     )
     
     return y
+
+def test_softmax_kernel(size: tuple, atol=1e-3, rtol=1e-3, device=DEVICE):
+    torch.manual_seed(0)
+    assert type(size) is tuple and len(size) == 2
+    x = torch.randn(size[0], size[1], device=DEVICE)
+    z_tri = softmax(x)
+    z_ref = torch.softmax(x, axis=1)
+    torch.testing.assert_close(z_tri, z_ref, atol=atol, rtol=rtol)
+    print("PASSED")
