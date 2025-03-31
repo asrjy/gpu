@@ -148,3 +148,32 @@ def test_softmax_kernel(size: tuple, atol=1e-3, rtol=1e-3, device=DEVICE):
     z_ref = torch.softmax(x, axis=1)
     torch.testing.assert_close(z_tri, z_ref, atol=atol, rtol=rtol)
     print("PASSED")
+
+@triton.testing.perf_report(
+    triton.testing.Benchmark(
+        x_names=['N'],
+        x_vals=[128 * i for i in range(2, 100)],
+        line_arg='provider',
+        line_vals=['triton', 'torch'],
+        line_names=["Triton", "Torch"],
+        styles=[('blue', '-'), ('green', '-')],
+        ylabel="GB/s",
+        plot_name="softmax-performance",
+        args={'M': 4096} # values for function arguments not in x_names
+    ))
+def benchmark(M, N, provider):
+    x = torch.randn(M, N, device=DEVICE, dtype=torch.float32)
+    stream = getattr(torch, DEVICE.type).Stream()
+    getattr(torch, DEVICE.type).set_stream(stream)
+
+    if provider == 'torch':
+        ms = triton.testing.do_bench(lambda: torch.softmax(x, axis=-1))
+    if provider == 'triton':
+        ms = triton.testing.do_bench(lambda: softmax(x))
+    gbps = lambda ms: 2 * x.numel() * x.element_size() * 1e-9 / (ms * 1e-3)
+        # 2 = number of memory operations (1 read + 1 write)
+        # x.numel() = number of elements
+        # x.element_size() = bytes per element (4 for float32)
+        # 1e-9 converts bytes to GB
+        # 1e-3 converts milliseconds to seconds
+    return gbps(ms)
