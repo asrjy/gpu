@@ -177,3 +177,12 @@ def benchmark(M, N, provider):
         # 1e-9 converts bytes to GB
         # 1e-3 converts milliseconds to seconds
     return gbps(ms)
+
+if __name__ == "__main__":
+    # always run unit-tests
+    test_softmax_kernel(size=(1823, 781))
+
+    # Only run benchmark if explicitly requested
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1] == "--benchmark":
+        benchmark.run(save_path='.', print_data=False)
