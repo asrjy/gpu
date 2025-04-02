@@ -2,6 +2,8 @@ import torch
 import triton 
 import triton.language as tl 
 DEVICE = "cuda"
+DEVICE = torch.device(f'cuda:{torch.cuda.current_device()}')
+
 
 def naive_softmax(x):
     """
@@ -141,10 +143,16 @@ def softmax(x):
     return y
 
 def test_softmax_kernel(size: tuple, atol=1e-3, rtol=1e-3, device=DEVICE):
+    """
+    uses pytorch outpiut to compare and validate custom implementation
+
+    using irregular number of rows and columns to ensure padding logic works
+    """
     torch.manual_seed(0)
     assert type(size) is tuple and len(size) == 2
     x = torch.randn(size[0], size[1], device=DEVICE)
     z_tri = softmax(x)
+    # passing axis is seen in pytorch but not in custom implementation as they are ..well custom
     z_ref = torch.softmax(x, axis=1)
     torch.testing.assert_close(z_tri, z_ref, atol=atol, rtol=rtol)
     print("PASSED")
