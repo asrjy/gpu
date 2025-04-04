@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|065|[triton: matrix multiplication](./triton/matmul.py)|[triton](./notes/005/)|matmul kernel|
 |064|[triton: matrix multiplication](./triton/matmul.py)|[triton](./notes/005/)|autotuning|
 |063|[triton: fused softmax](./triton/fused_softmax.py)|[triton](./notes/005/)|added benchmarks|
 |062|[triton: fused softmax](./triton/fused_softmax.py)|[triton](./notes/005/)|working fused softmax|
