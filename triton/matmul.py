@@ -52,3 +52,18 @@ def _matmul_kernel(
     
     a_offsets = offsets_M[:, None] * stride_a_M + offsets_K[None, :] * stride_a_K
     b_offsets = offsets_K[:, None] * stride_b_K + offsets_N[None, :] * stride_b_N
+
+    accumulator = tl.zeros((BLOCK_SIZE_M, BLOCK_SIZE_N), dtype=tl.float32) 
+    for k in range(0, tl.cdiv(K, BLOCK_SIZE_K)):
+        
+        mask = offsets_K < K - k * BLOCK_SIZE_K
+        a = tl.load(a_ptr + a_offsets, mask=mask[None, :], other=0.0) 
+        b = tl.load(b_ptr + b_offsets, mask=mask[:, None], other=0.0) 
+        accumulator = tl.dot(a, b, acc=accumulator)
+        a_offsets += BLOCK_SIZE_K * stride_a_K
+        b_offsets += BLOCK_SIZE_K * stride_b_K
+    
+    accumulator = accumulator.to(tl.float16)
+    c_offsets = stride_c_M * offsets_M[:, None] + stride_c_N * offsets_N[None, :]
+    c_mask = (offsets_M[:, None] < M) & (offsets_N[None, :] < N) 
+    tl.store(c_ptr + c_offsets, accumulator, mask=c_mask) 
