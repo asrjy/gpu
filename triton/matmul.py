@@ -67,3 +67,28 @@ def _matmul_kernel(
     c_offsets = stride_c_M * offsets_M[:, None] + stride_c_N * offsets_N[None, :]
     c_mask = (offsets_M[:, None] < M) & (offsets_N[None, :] < N) 
     tl.store(c_ptr + c_offsets, accumulator, mask=c_mask) 
+
+
+def matmul(a, b):
+    # checking constraints. 
+    # 1. to check if both are matrices and not vectors or tensors. 
+    # 2. if matmul compatible dimensions or not 
+    assert a.ndim == b.ndim == 2, "input not matrix."
+    assert a.shape[1] == b.shape[0], "incompatible matmul dimensions."
+    a,b  = a.to(torch.float16), b.to(torch.float16)
+
+    (M, K), (_, N) = a.shape, b.shape
+
+    # allocating output
+    c = torch.empty((M, N), device = a.device, dtype = torch.float16)
+
+    # grid launch 
+    grid = lambda meta: (triton.cdiv(M, meta['BLOCK_SIZE_M']) * triton.cdiv(N, meta['BLOCK_SIZE_N']), )
+    _matmul_kernel[grid](
+        a, b, c,
+        M, N, K,
+        a.stride(0), a.stride(1),
+        b.stride(0), b.stride(1),
+        c.stride(0), c.stride(1),
+    )
+    return c

@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|068|[triton: matrix multiplication](./triton/matmul.py)|[triton](./notes/005/)|matmul kernel wrapper function|
 |067|[triton: matrix multiplication](./triton/matmul.py)|[triton](./notes/005/)|matmul kernel function|
 |066|[triton: matrix multiplication](./triton/matmul.py)|[triton](./notes/005/)|matmul kernel function|
 |065|[triton: matrix multiplication](./triton/matmul.py)|[triton](./notes/005/)|matmul kernel on paper|
