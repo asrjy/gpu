@@ -92,3 +92,16 @@ def matmul(a, b):
         c.stride(0), c.stride(1),
     )
     return c
+
+def test_matmul_kernel(size: tuple, atol=1e-2, rtol=1e-1, device=DEVICE): 
+    # create input data
+    torch.manual_seed(0)
+    assert type(size) == tuple and len(size) == 2
+    a = torch.randn((512, 512), device=DEVICE, dtype=torch.float16)
+    b = torch.randn((512, 512), device=DEVICE, dtype=torch.float16)
+    # run kernel & pytorch reference implementation
+    c_tri = matmul(a, b)
+    c_ref = torch.matmul(a, b)
+    # compare
+    torch.testing.assert_close(c_tri, c_ref, atol=atol, rtol=rtol)
+    print("PASSED")
