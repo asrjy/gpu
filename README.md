@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|071|[triton: matrix multiplication](./triton/matmul.py)|[triton](./notes/005/)|matmul kernel testing|
 |070|[triton: matrix multiplication](./triton/matmul.py)|[triton](./notes/005/)|matmul kernel configs and bencharking|
 |069|[triton: matrix multiplication](./triton/matmul.py)|[triton](./notes/005/)|matmul kernel tester|
 |068|[triton: matrix multiplication](./triton/matmul.py)|[triton](./notes/005/)|matmul kernel wrapper function|
