@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|073|[triton: dropout](./triton/dropout.py)|[triton](./notes/005/)|dropout testing|
 |073|[triton: dropout](./triton/dropout.py)|[triton](./notes/005/)|dropout wrapper|
 |072|[triton: dropout](./triton/dropout.py)|[triton](./notes/005/)|dropout kernel|
 |071|[triton: matrix multiplication](./triton/matmul.py)|[triton](./notes/005/)|matmul kernel testing|

@@ -30,3 +30,9 @@ def seeded_dropout(x, p, seed):
     grid = lambda meta: (triton.cdiv(n_elements, meta['BLOCK_SIZE']), )
     _seeded_dropout[grid](x, output, n_elements, p, seed, BLOCK_SIZE=1024)
     return output
+
+x = torch.randn(size=(8, ), device=DEVICE)
+output1 = seeded_dropout(x, p=0.5, seed=123)
+output2 = seeded_dropout(x, p=0.5, seed=123)
+output3 = seeded_dropout(x, p=0.5, seed=512)
+print(x, output1, output2, output3, sep="\n")
