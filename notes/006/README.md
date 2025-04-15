@@ -1,0 +1,3 @@
+- use `torch.autograd.profiler.profile()` to profile pytorch code. 
+- since cuda is async, we cannot use python's `time()` function. 
+- since timing takes some time to warmup, we can do some dummy calculation. 
