@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|077|[cuda mode: lecture 1 part 2](./cuda_mode/001-vector-square-profiling.py)|[profiling](./notes/006/)|profiling kernels in pytorch|
 |076|[cuda mode: lecture 1](./cuda_mode/001-vector-square-profiling.py)|[profiling](./notes/006/)|profiling kernels in pytorch|
 |075|[triton: dropout](./triton/dropout.py)|[triton](./notes/005/)|dropout bug fixing|
 |074|[triton: dropout](./triton/dropout.py)|[triton](./notes/005/)|dropout testing|
