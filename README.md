@@ -8,6 +8,7 @@
 
 |**Day**|**Code**|**Notes**|**Progress**|
 |---|----|-----|--------|
+|080|[cuda mode: lecture 1 part 3](./cuda_mode/001-vector-square-profiling.py)|[profiling](./notes/006/)|inline cuda calls in pytorch|
 |079|[cuda mode: lecture 1 part 3](./cuda_mode/001-vector-square-profiling.py)|[profiling](./notes/006/)|inline cuda calls in pytorch|
 |078|[cuda mode: lecture 1 part 3](./cuda_mode/001-vector-square-profiling.py)|[profiling](./notes/006/)|inline cuda calls in pytorch|
 |077|[cuda mode: lecture 1 part 2](./cuda_mode/001-vector-square-profiling.py)|[profiling](./notes/006/)|profiling kernels in pytorch|
